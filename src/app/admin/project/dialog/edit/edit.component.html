@@ -1,0 +1,21 @@
+<div class="container">
+    <h3 mat-dialog-title>Edit Project</h3>
+    <form class="mat-dialog-content" [formGroup]="editProject" (ngSubmit)="onSubmit()">
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput placeholder="Project Name" formControlName="projectName" maxlength="50" required>
+          <mat-error *ngIf="editProject.controls.projectName.touched && editProject.controls.projectName.invalid">
+            <span *ngIf="editProject.controls.projectName.errors.required">Please enter a Project Name</span>
+            <span *ngIf="editProject.controls.projectName.errors.pattern">Please enter a valid Project Name</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div mat-dialog-actions>
+        <button mat-raised-button color="primary" [disabled]="editProject.invalid" type="submit">
+        Update</button>
+        <button mat-raised-button mat-dialog-close color="warn">
+         Cancel</button>
+      </div>
+    </form>
+  </div>

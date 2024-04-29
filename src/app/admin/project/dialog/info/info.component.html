@@ -1,0 +1,67 @@
+<div class="infomain">
+  <div class="header">
+    <h2>Edit Project:{{project}}</h2>
+  </div>
+  <hr>
+  
+  <div class="container-border">
+    <div class="sub-container">
+      <form [formGroup]="materialForm" (ngSubmit)="submit()">
+        <div class="form-field">
+          <div class="live-photo">
+            <h3 class="heading"><b>Upload Live Photo</b></h3>
+            <div class="Preview-img">
+              <img [src]="selectedImage ? selectedImage : 'assets/images/IT_wala.jpg'" alt="Profile Preview"
+                data-id="filePreview" (click)="fileInput.click()">
+            </div>
+            <input type="file" accept=".jpg, .jpeg, .png, .gif" data-id="fileInput" #fileInput>
+            <mat-error *ngIf="isFieldInvalid('image')">
+              Please select the image
+            </mat-error>
+          </div>
+        </div>
+        <div class="form-field">
+          <div>
+            <mat-form-field>
+              <mat-label>Material</mat-label>
+              <mat-select #selectMaterial [(value)]="selectedMaterial" (selectionChange)="updateItemsDropdown()">
+                <mat-option *ngFor="let option of Materials" [value]="option.value">{{ option.viewValue }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Address</mat-label>
+              <input matInput type="text" formControlName="address" />
+              <mat-error *ngIf="isFieldInvalid('address')">
+                Please fill the address
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-field">
+          <div>
+            <mat-form-field color="accent">
+              <input matInput type="number" placeholder="Quantity" formControlName="quantity" required>
+              <mat-error *ngIf="isFieldInvalid('quantity')">
+                please enter a quantity
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Items</mat-label>
+              <mat-select #selectItem [(value)]="selectedItems">
+                <mat-option *ngFor="let option of filteredItems" [value]="option.value">{{ option.viewValue
+                  }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-field">
+          <button mat-raised-button color="primary" type="submit" class="savematerial">Save Material</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

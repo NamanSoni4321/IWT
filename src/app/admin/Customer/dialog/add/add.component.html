@@ -1,0 +1,74 @@
+<mat-stepper [linear]="isLinear" #stepper class="steper-class" >
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup" >
+      <ng-template matStepLabel>Mobile Number</ng-template>
+      <h3 mat-dialog-title class="mobile-view">Customer Number</h3>
+      <mat-form-field>
+        <mat-label>Enter a mobile number</mat-label>
+        <input matInput placeholder="Mobile Number" formControlName="mobileNumber" maxlength="10">
+      </mat-form-field>
+      <mat-error
+        *ngIf="firstFormGroup.controls.mobileNumber.hasError('pattern') && 
+      [firstFormGroup.controls.mobileNumber.hasError('minlength') || firstFormGroup.controls.mobileNumber.hasError('maxlength')]">
+        Invalid Mobile Number.
+      </mat-error>
+
+      <div mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="registeredNumber()" [disabled]="firstFormGroup.invalid"
+          class="button">Next</button>
+        <button color="warn" mat-raised-button mat-dialog-close> Close</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup" label="OTP">
+    <form [formGroup]="secondFormGroup">
+      <h3 mat-dialog-title class="mobile-view">Enter a OTP</h3>
+      <mat-form-field>
+        <input matInput formControlName="otp" placeholder="OTP" required>
+      </mat-form-field>
+
+      <div mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="registeredOTP()" [disabled]="this.secondFormGroup.invalid"
+          class="button">Verify</button>
+        <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <div>
+      <ng-template matStepLabel>Create</ng-template>
+      <div class="container">
+        <h3 mat-dialog-title class="mobile-view">Create Customer</h3>
+        <form class="mat-dialog-content" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+          <div class="form">
+            <mat-form-field color="accent">
+              <input matInput placeholder="Enter a name" formControlName="name" maxlength="50">
+              <mat-error *ngIf="customerForm.controls.name.touched && customerForm.controls.name.invalid">
+                <span *ngIf="customerForm.controls.name.errors.required">Please enter a name</span>
+                <span *ngIf="customerForm.controls.name.errors.pattern">Please enter a valid name</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form">
+            <mat-form-field color="accent">
+              <input matInput placeholder="Enter a email" formControlName="email" minlength="5" maxlength="100">
+              <mat-error *ngIf="customerForm.controls.email.touched && customerForm.controls.email.invalid">
+                <span *ngIf="customerForm.controls.email.errors.required">Please enter a email</span>
+                <span *ngIf="customerForm.controls.email.errors.pattern">Please enter a valid email</span>
+                <span *ngIf="customerForm.get('email').hasError('restrict')">This is a testing email, Please provide another email </span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div mat-dialog-actions>
+            <button mat-raised-button color="primary" [disabled]="customerForm.invalid" type="submit">Save</button>
+            <button color="warn" mat-raised-button mat-dialog-close>Skip</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-step>
+</mat-stepper>

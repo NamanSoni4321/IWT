@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a [routerLink]="'/'">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+  <div class="sub-profile">
+    <div class="primary-profile">
+      <div class="border">
+        <div class="imgcontainer">
+          <label for="uploadInput" class="profile-preview" matTooltip="Click to change image">
+            <img
+              [src]="selectedImage ? selectedImage : 'assets/images/avatar.png'"
+              alt="Profile Preview" />
+          </label>
+          <input type="file" id="uploadInput" class="image-input"
+            (change)="onImageSelected($event)"
+            accept="image/*" />
+        </div>
+        <div class="container-text">
+          <h2 class="info">
+            Personal Information
+            <mat-icon aria-label="info" matTooltip="Personal Information" (click)="edit_Details()">info</mat-icon>
+          </h2>
+          <h3 class="project-name" matTooltip="IT Wala"><strong>IT Wala</strong> </h3>
+          <p matTooltip="{{getEmail?.email}}"><strong>{{getEmail?.email}}</strong></p>
+          <p><strong>Language</strong> : English</p>
+          <button mat-raised-button color="primary"  class="w-50"
+             (click)="openDialog()">Change Passsword</button>
+        </div>
+      </div>
+    </div>
+    <div class="w-100" *ngIf="editDetails">
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Full Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">Devraj</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{this.getEmail.email}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Phone</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">+91-9723456780</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Role</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{this.getEmail.role}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Address</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">Indore</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

@@ -1,0 +1,40 @@
+<div class="login-page">
+  <div class="content px20">
+    <form class="login-form" [formGroup]="form" (ngSubmit)="onLogin()">
+      <div class="text-center">
+        <h4 >Login</h4>
+      </div>
+      <div fxLayout="row">
+        <div fxFlexFill>
+          <mat-form-field class="w-100">
+            <input matInput placeholder="Email" formControlName="username" required>
+            <mat-error *ngIf="isFieldInvalid('username')">
+              Please enter your email
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password"
+              required>
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="isFieldInvalid('password')">
+              Please enter your password
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.xs="column" class="mt20 mb20">
+        <a href="javascript:void(0)" (click)="forgotPassword()">Forgot Password?</a>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.xs="column" class="mt20 mb20">
+      </div>
+      <div fxLayout="row">
+        <div fxFlexFill>
+          <button mat-raised-button color="primary" class="w-100"><mat-icon>exit_to_app</mat-icon> Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

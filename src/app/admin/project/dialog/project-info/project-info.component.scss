@@ -1,0 +1,50 @@
+.header {
+    text-align: center;
+}
+
+.heading {
+    color: #ff0000;
+    margin-bottom: 20px;
+}
+
+.button-group {
+    display: flex;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.material-color:hover {
+    background-color: rgb(236, 200, 101);
+}
+
+.material-color {
+    background-color: rgb(245, 222, 179);
+    width: 250px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin: 8px;
+}
+
+.font-material {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.mat-cell img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.mat-elevation-z8 {
+    margin: 0 10px;
+}
+
+.excel-info {
+    margin-top: 10px;
+}

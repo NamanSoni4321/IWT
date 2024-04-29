@@ -1,0 +1,81 @@
+<div class="title">
+  <h2>Setting Dashboard</h2>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a [routerLink]="'/'">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Setting</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<mat-tab-group>
+  <mat-tab label="Our Logo">
+    <div class="quality-check">
+    <img src="assets/images/quality-check.png" alt="quality-check loading....">
+  </div>
+  </mat-tab>
+
+  <mat-tab label="Update Video">
+    <mat-card class="setting-card">
+      <h2><b><span>Please upload the video below !</span></b></h2>
+      <div class="form">
+        <div class="videoContainer">
+          <div class="uploadFiles">
+            <video crossorigin="anonymous" [src]="url" *ngIf="format==='video' && url" class="width" controls></video>
+            <div *ngIf="videoUrl" class="col-sm-10">
+              <video crossorigin="anonymous"  width="270" height="220" controls disabled="true" [hidden]="videoSelected" (click)="toggleVideo($event)" #videoPlayer>
+                <source  [src]="videoUrl" type="video/mp4" >
+              </video>
+            </div>
+            <div class="vid-files">
+              <button class="btn btn-secondary" variant="outlined">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                  stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round"
+                    d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                </svg>
+              </button>
+              <input type="file" (change)="onSelectFile($event)" accept="video/*" id="fileInput" class="input-video">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button">
+        <button class="btn btn-primary" (click)="uploadFiles()" [hidden]="!videoSelected">Upload</button>
+      </div>
+    </mat-card>
+  </mat-tab>
+
+  <mat-tab label="Update Material">
+    <mat-card class="setting-card">
+      <h3 class="title">Add Material</h3>
+      <form class="mat-dialog-content" [formGroup]="materialForm" (ngSubmit)="onSubmit()">
+        <div class="form">
+          <mat-form-field color="accent">
+            <input matInput placeholder="Material" formControlName="material1">
+          </mat-form-field>
+        </div>
+        <div class="form">
+          <mat-form-field color="accent">
+            <input matInput placeholder="Material" formControlName="material2">
+          </mat-form-field>
+        </div>
+        <div class="form">
+          <mat-form-field color="accent">
+            <input matInput placeholder="Material" formControlName="material3">
+          </mat-form-field>
+        </div>
+        <mat-card-actions class="action">
+          <button mat-raised-button color="primary" type="submit" [disabled]="materialForm.invalid">Update
+            Material</button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>

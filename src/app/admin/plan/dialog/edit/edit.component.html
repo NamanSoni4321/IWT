@@ -1,0 +1,30 @@
+<div class="container">
+  <h3 mat-dialog-title>Edit Plan</h3>
+
+  <form class="mat-dialog-content" [formGroup]="editPlan" (ngSubmit)="onSubmit()">
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput placeholder="Title" formControlName="name" maxlength="20" required>
+        <mat-error *ngIf="editPlan.controls.name.touched && editPlan.controls.name.invalid">
+          <span *ngIf="editPlan.controls.name.errors.required">Plan name is required</span>
+          <span *ngIf="editPlan.controls.name.errors.pattern">Invalid plan name</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput placeholder="Price" formControlName="price" minlength="3" maxlength="6"  required>
+        <mat-error *ngIf="editPlan.controls.price.touched && editPlan.controls.price.invalid">
+          <span *ngIf="editPlan.controls.price.errors.required">Price is required</span>
+          <span *ngIf="editPlan.controls.price.errors.pattern">Invalid price</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" [disabled]="editPlan.invalid" type="submit">Update</button>
+      <button color="warn" mat-raised-button mat-dialog-close>Cancel</button>
+    </div>
+  </form>
+</div>

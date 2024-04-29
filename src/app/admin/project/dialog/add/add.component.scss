@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container>* {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  padding-top: 6px;
+  height: 100px;
+}
+
+.mat-form-field {
+  font-size: 16px;
+  flex-grow: 1;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.select-all {
+  margin: 5px 17px;
+}
+
+.mat-dialog-content {
+  overflow: hidden;
+}
+
+.mat-dialog-actions {
+  padding-bottom: 20px !important;
+}

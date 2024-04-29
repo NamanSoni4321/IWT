@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import './scss/material';
+@import './scss/utils';
+@import './scss/responsive';
+@import './scss/variables';
+@import './scss/theme';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.form-control:focus {
+    box-shadow: none !important;
+}
+
+.fade {
+    text-align: center;
+    padding-top: calc(100vh / 2);
+    height: 100vh;
+}
+
+@media (max-width:768px) {
+    .steper-class .mat-horizontal-stepper-header-container .mat-step-header {
+        display: none !important;
+      }
+      .mat-stepper-horizontal-line {
+        border-top-style: hidden !important;
+    }
+    .mobile-view{
+        display: block;
+    }
+}
+
+  

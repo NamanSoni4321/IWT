@@ -1,0 +1,84 @@
+<div class="container-project">
+  <div class="header">
+    <h3>Project:{{ projectName | titlecase}}</h3>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a [routerLink]="'/'">Home</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="'/project'">Project</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Project-Info</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div *ngIf="!noDataFound" class="button-group">
+    <ng-container *ngFor="let itemId of materialId; let i = index">
+      <ng-container
+        *ngIf="materialData?.materialData[i]?.name !== null && materialData?.materialData[i]?.quantity !== null && materialData?.materialData[i]?.type !==null">
+        <br>
+        <div class="material-color">
+          <a class="font-material">
+            {{ materialData?.materialData[i]?.name }} = {{ materialData?.materialData[i]?.quantity }} {{
+            materialData?.materialData[i]?.type }}<br>
+          </a>
+          <!-- <a class="font-material" [routerLink]="['/project/info', id]" [queryParams]="{ material: itemId.toString() }">
+              {{ materialData?.materialData[i]?.name }} = {{ materialData?.materialData[i]?.quantity }}  {{ materialData?.materialData[i]?.type }}<br>
+            </a> -->
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+  <mat-table [dataSource]="dataSource" matSort class="mat-cell customTable">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
+      <mat-cell *matCellDef="let items; let i = index">{{i+1}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="orderMaterialId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Material</mat-header-cell>
+      <mat-cell *matCellDef="let items">
+        {{ itemNamesMapping[items.orderMaterialId] || 'unknown'}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items.quantity}} {{items?.type?.type}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="liveFileUrl">
+      <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
+      <mat-cell *matCellDef="let items">
+        <ng-container *ngIf="items.liveFileUrl">
+          <img crossorigin="anonymous" [src]="items.liveFileUrl" alt="Loading.." />
+        </ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Created</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items.createdAt | date :'medium'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items.address}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let items; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <!-- Show "No data found" message when there's no data -->
+  <div *ngIf="noDataFound" class="no-data-message">
+    <img src="assets/images/noData.png" alt="no-data-found">
+  </div>
+
+  <div *ngIf="!noDataFound" class="excel-info">
+    <button mat-raised-button color="primary" (click)="exportToExcel()">Export to Excel</button>
+  </div>

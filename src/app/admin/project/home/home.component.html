@@ -1,0 +1,127 @@
+<div class="title">
+  <h2> Project Dashboard</h2>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a [routerLink]="'/'">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Project</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<mat-card class="project-table-wrapper">
+  <mat-card-title class="project-table-wrapper__header">
+    <!-- <p *ngIf="!isShowFilterInput" class="project-table-wrapper__title">List</p> -->
+
+    <button mat-raised-button color="primary" matTooltip="Add Project" (click)="openAddDialog()">Add
+      <!-- <mat-icon aria-label="Example icon-button with a heart icon" >add</mat-icon> -->
+    </button>
+
+    <div *ngIf="isShowFilterInput" class="project-table-wrapper__search">
+      <div class="project-table-wrapper__icon-wrapper">
+        <mat-icon class="project-table-wrapper__icon" matTooltip="Search">search</mat-icon>
+      </div>
+
+      <input matInput placeholder="Search..." class="project-table-wrapper__search-input" (keyup)="applyFilter($event.target.value)">
+      <!-- <button class="project-table-wrapper__button" mat-mini-fab (click)="showFilterInput()">
+        <mat-icon class="project-table-wrapper__icon">close</mat-icon>
+      </button> -->
+    </div>
+
+    <button *ngIf="!isShowFilterInput" class="project-table-wrapper__button" mat-mini-fab (click)="showFilterInput()">
+      <mat-icon class="project-table-wrapper__icon" matTooltip="Search">search</mat-icon>
+    </button>
+  </mat-card-title>
+
+  <mat-table [dataSource]="dataSource" matSort class="mat-cell customTable">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+      <mat-cell *matCellDef="let items; let i = index">{{ i + 1 + itemsPerPage *(currentPage - 1) }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="projectName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Project Name</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="word-break"> {{items.projectName | titlecase}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="word-break"> {{items?.users?.address}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Email</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="word-break"> {{items?.users?.email | titlecase}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mobileNumber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Mobile Number</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items?.users?.mobileNumber}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Customer Name</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items?.users?.name | titlecase}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isCompleted">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Profile Completed</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="isCompleted">
+        {{items?.users?.isCompleted === true ? '✔' : '✘' }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Created Date</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items.createdAt | date}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="updatedAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Update Date</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items.updatedAt | date}}</mat-cell>
+    </ng-container>
+
+    <!-- actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Action
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let items; let i=index;">
+        <button mat-icon-button color="accent" [routerLink]="['/project/project-info',items.id]" matTooltip="View">
+          <mat-icon aria-label="info">remove_red_eye</mat-icon>
+        </button>
+        <button mat-icon-button color="accent">
+          <mat-icon aria-label="Edit" (click)="openEditDialog(items)"
+            matTooltip="Edit">edit</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" matTooltip="Delete">
+          <mat-icon aria-label="Delete" (click)="deleteProject(items)">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let items; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <!-- Show "No data found" message when there's no data -->
+  <div *ngIf="!dataSource.data || dataSource.data.length === 0" class="no-data-message">
+    <img src="assets/images/noData.png" alt="no-data-found">
+  </div>
+
+  <div *ngIf="!dataSource.data || dataSource.data.length > 0"  class="excel">
+    <button *ngIf="!dataSource.data || dataSource.data.length > 0" mat-raised-button color="primary"
+      (click)="exportToExcel()">Export to Excel</button>
+  </div>
+
+  <div *ngIf="!dataSource.data || dataSource.data.length > 0">
+    <mat-paginator [pageSize]="itemsPerPage" [pageIndex]="currentPage - 1" [length]="totalItems"
+      [pageSizeOptions]="[10, 25, 50, 100]" (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
+  </div>
+
+</mat-card>
