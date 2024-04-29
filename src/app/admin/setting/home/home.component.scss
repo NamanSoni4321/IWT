@@ -1,0 +1,118 @@
+.videoContainer {
+    margin: 24px 0 12px 0;
+    position: relative;
+    display: contents;
+
+    .uploadFiles {
+        max-width: 500px;
+        margin: 0 auto;
+        border: dashed;
+        border-color: #1976d2;
+        padding: 22px;
+        border-radius: 15px;
+        text-align: center;
+
+        .vid-files {
+            position: relative;
+            margin: 0 auto;
+
+            & svg {
+                width: 50px;
+            }
+
+            & button {
+                margin: 15px;
+            }
+        }
+
+        .width {
+            width: 100%;
+        }
+    }
+}
+
+.input-video {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-width: 450px;
+}
+
+.container>* {
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    padding-top: 6px;
+}
+
+.mat-dialog-title {
+    text-align: center;
+}
+
+.mat-form-field {
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.mat-dialog-content {
+    overflow: hidden;
+}
+
+.mat-dialog-actions {
+    margin-bottom: -10px;
+    height: 50px;
+    text-align: initial;
+}
+
+.border-box {
+    margin-top: 20px;
+}
+
+.setting-card {
+    margin-top: 20px;
+    max-width: 600px;
+    min-height: 400px;
+
+    & h2 {
+        margin-top: 20px;
+    }
+}
+
+.action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+
+    .btn-primary {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width:768px) {
+    .videoContainer .uploadFiles {
+        padding: 10px;
+    }
+}
+
+.quality-check{
+    @media (max-width:768px) {
+        img{
+        max-width: 300px;
+    }
+}
+}

@@ -1,0 +1,38 @@
+<div class="container">
+  <h3 mat-dialog-title>Edit Customer</h3>
+  <form class="mat-dialog-content" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput placeholder="Name" formControlName="name" maxlength="50" required>
+        <mat-error *ngIf="customerForm.controls.name.touched && customerForm.controls.name.invalid">
+          <span *ngIf="customerForm.controls.name.errors.required">Please enter a name</span>
+          <span *ngIf="customerForm.controls.name.errors.pattern">Please enter a valid name</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput placeholder="email" formControlName="email" minlength="5" maxlength="100" required>
+        <mat-error *ngIf="customerForm.controls.email.touched && customerForm.controls.email.invalid">
+          <span *ngIf="customerForm.controls.email.errors.required">Please enter a email</span>
+          <span *ngIf="customerForm.controls.email.errors.pattern">Please enter a valid email</span>
+          <span *ngIf="customerForm.get('email').hasError('restrict')">This is a testing email, Please provide another email </span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <textarea matInput placeholder="Address" formControlName="address"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" [disabled]="customerForm.invalid" type="submit">
+      Update</button>
+      <button mat-raised-button mat-dialog-close color="warn">
+       Cancel</button>
+    </div>
+  </form>
+</div>

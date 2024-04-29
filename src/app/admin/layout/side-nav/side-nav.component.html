@@ -1,0 +1,36 @@
+
+<mat-nav-list>
+  <a
+    *ngFor="let item of routes"
+    mat-list-item
+    [routerLinkActive]="'active'"
+    [routerLink]="['/', item.path]"
+  >
+    <mat-icon class="sidenav-icon">{{ item.data.icon }}</mat-icon>
+    {{ item.data.text }}
+  </a>
+
+  <div class="nested-menu">
+    <a mat-list-item (click)="showMenu = !showMenu">
+      <mat-icon class="sidenav-icon">{{ !showMenu ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>Service
+    </a>
+    <ul class="nested submenu" [class.expand]="showMenu">
+      <li>
+        <a [routerLink]="['/service/transaction']">
+          <mat-icon class="sidenav-icon">history</mat-icon> Transaction History
+        </a>
+      </li> 
+       <li>
+        <a [routerLink]="['/service/hire-us']">
+          <mat-icon>business_center</mat-icon> Hire Us
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/service/qa']">
+        <mat-icon>assignment_turned_in</mat-icon> QA
+        </a>
+      </li>
+    </ul>
+  </div>
+</mat-nav-list>
+

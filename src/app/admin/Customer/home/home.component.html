@@ -1,0 +1,116 @@
+<div class="title">
+  <h2>Customer Dashboard</h2>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a [routerLink]="'/'">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<mat-card class="customer-table-wrapper">
+  <mat-card-title class="customer-table-wrapper__header">
+    <button mat-raised-button color="primary" matTooltip="Add Customer" (click)="openAddDialog()"
+      class="customer-table-wrapper__title">Add</button>
+
+    <div *ngIf="isShowFilterInput" class="customer-table-wrapper__search">
+      <div class="customer-table-wrapper__icon-wrapper">
+        <mat-icon class="customer-table-wrapper__icon" matTooltip="Search">search</mat-icon>
+      </div>
+      <input matInput placeholder="Search..." class="customer-table-wrapper__search-input" (keyup)="applyFilter($event.target.value)">
+    </div>
+
+    <button *ngIf="!isShowFilterInput" class="customer-table-wrapper__button" mat-mini-fab (click)="showFilterInput()">
+      <mat-icon class="customer-table-wrapper__icon" matTooltip="Search">search</mat-icon>
+    </button>
+  </mat-card-title>
+
+  <mat-table [dataSource]="dataSource" matSort class="mat-cell customTable">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+      <mat-cell *matCellDef="let items; let i = index">{{ i + 1 + itemsPerPage *(currentPage - 1) }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Name</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="word-break"> {{items.name | titlecase}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Email</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="word-break">{{items.email | titlecase}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mobileNumber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Mobile Number</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items.mobileNumber}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isCompleted">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Profile Completed</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="isCompleted">
+        {{items.isCompleted === true ? '✔' : '✘' }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="word-break"> {{items.address}}</mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Block</mat-header-cell>
+      <mat-cell *matCellDef="let items" matTooltip="Block/Unblock User">
+        <mat-slide-toggle [checked]="items.status" (change)="toggleStatus(items)">
+        </mat-slide-toggle>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Created Date</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items.createdAt | date}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="updatedAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Updated Date</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items.updatedAt | date}}</mat-cell>
+    </ng-container>
+
+    <!-- actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
+      <mat-cell *matCellDef="let items; let i=index;">
+        <button mat-icon-button color="accent">
+          <mat-icon aria-label="Edit" (click)="openEditDialog(items.id, items.name, items.email,items.address)"
+            matTooltip="Edit">edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="accent">
+          <mat-icon aria-label="Delete" (click)="deleteItem(items)" matTooltip="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let items; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <!-- Show "No data found" message when there's no data -->
+  <div *ngIf="!dataSource.data || dataSource.data.length === 0" class="no-data-message">
+    <img src="assets/images/noData.png" alt="Loading..">
+  </div>
+
+  <div *ngIf="!dataSource.data || dataSource.data.length > 0"  class="excel">
+    <button mat-raised-button color="primary" (click)="exportToExcel()">Export to Excel</button>
+  </div>
+
+  <div *ngIf="!dataSource.data || dataSource.data.length > 0">
+    <mat-paginator [pageSize]="itemsPerPage" [pageIndex]="currentPage - 1" [length]="totalItems"
+      [pageSizeOptions]="[10, 25, 50, 100]" (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
+  </div>
+</mat-card>

@@ -1,0 +1,23 @@
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between stretch">
+  <div class="mb10" fxFlex="24" fxFlex.lt-lg="49" class="dashboard">
+    <app-stat [bgClass]="'danger'" [icon]="'bar_chart'" 
+    [count]="customerCount === null ? 0 : customerCount" [label]="'Customer'" [routerLink]="'/customer'"></app-stat>
+  </div>
+  <div class="mb10" fxFlex="24" fxFlex.lt-lg="49" class="dashboard">
+    <app-stat [bgClass]="'warn'" [icon]="'table_chart'"
+     [count]="projectCount === null ? 0 :projectCount" [label]="'Project'" [routerLink]="'/project'"></app-stat>
+  </div> 
+   <div class="mb10" fxFlex="24" fxFlex.lt-lg="49" class="dashboard">
+    <app-stat [bgClass]="'success'" [icon]="'assignment'" 
+    [count]="plansCount === null ? 0 :plansCount" [label]="'Plan'" [routerLink]="'/plan'"></app-stat>
+  </div>
+  <div class="mb10" fxFlex="24" fxFlex.lt-lg="49" class="dashboard">
+    <app-stat [bgClass]="'info'" [icon]="'payment'" 
+    [count]="totalAmount === null ? 0 : totalAmount" [label]="'Revenue'" [routerLink]="'/service/transaction'"></app-stat>
+  </div>
+</div>
+
+<div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutAlign="space-between stretch">
+  <app-pie-chart fxFlex.gt-sm="30" class="mb5" *ngIf="isPieComponent" [activeCustomer]="activeCustomerData" [inActiveCustomer]="inActiveCustomerData"></app-pie-chart>
+  <app-line-chart fxFlex.gt-sm="68" class="mb5"  *ngIf="isLineComponent" [activeLineCustomer]="activeLineCustomer" [activeLineProject]="activeLineProject"></app-line-chart>
+</div>

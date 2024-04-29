@@ -1,0 +1,53 @@
+<div class="container">
+  <h3 mat-dialog-title>Add new Project</h3>
+  <div class="form">
+    <mat-form-field color="accent">
+      <mat-label>Select Customer</mat-label>
+      <mat-select [(ngModel)]="selectedCustomer" (selectionChange)="onCustomerSelected()">
+        <mat-option *ngFor="let customer of filteredItems" [value]="customer">
+          {{ customer?.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- <mat-form-field>
+      <mat-select [(ngModel)]="selectedCustomer" (selectionChange)="onCustomerSelected()"
+        placeholder="Select Customer">
+        <mat-select-filter [placeholder]="'Search Customer'" [displayMember]="'name'" [array]="filteredItems"
+          (filteredReturn)="filteredList2 =$event"></mat-select-filter>
+        <mat-option *ngFor="let item of filteredList2" [value]="item">
+          {{item.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field> -->
+  </div>
+
+  <div *ngIf="showForm">
+    <form class="mat-dialog-content" [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput class="form-control" placeholder="Project Name" formControlName="name" maxlength="30">
+          <mat-error *ngIf="projectForm.controls.name.touched && projectForm.controls.name.invalid">
+            <span *ngIf="projectForm.controls.name.errors.required">Please enter a project name</span>
+            <span *ngIf="projectForm.controls.name.errors.pattern">Please enter a valid project name</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <h3 mat-dialog-title>Select items you want to track</h3>
+      <div class="form">
+        <mat-form-field>
+          <mat-label>Select Item</mat-label>
+          <mat-select #select multiple>
+            <mat-option *ngFor="let material of materials" [value]="material.value">
+              {{material.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!projectForm.valid">Save</button>
+        <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

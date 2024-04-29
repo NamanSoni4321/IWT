@@ -1,0 +1,92 @@
+<div class="title">
+  <h2>Quality Assurance</h2>
+</div>
+<hr>
+<!-- <div class="mat-elevation-z8"> </div>-->
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a [routerLink]="'/'">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Service</li>
+        <li class="breadcrumb-item active" aria-current="page">QA</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<mat-card class="quality-table-wrapper">
+  <mat-card-title class="quality-table-wrapper__header">
+    <div *ngIf="isShowFilterInput" class="quality-table-wrapper__search">
+      <div class="quality-table-wrapper__icon-wrapper">
+        <mat-icon class="quality-table-wrapper__icon" matTooltip="Search">search</mat-icon>
+      </div>
+
+      <input matInput placeholder="Search..." class="quality-table-wrapper__search-input" (keyup)="applyFilter($event.target.value)">
+    </div>
+
+    <button *ngIf="!isShowFilterInput && (!dataSource.data || dataSource.data.length > 0)"
+      class="quality-table-wrapper__button" mat-mini-fab (click)="showFilterInput()">
+      <mat-icon class="quality-table-wrapper__icon" matTooltip="Search">search</mat-icon>
+    </button>
+  </mat-card-title>
+
+  <mat-table [dataSource]="dataSource" matSort class="mat-cell  customTable">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">#</mat-header-cell>
+      <mat-cell *matCellDef="let items; let i = index">{{ i + 1 + itemsPerPage *(currentPage - 1) }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Name</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items?.users?.name | titlecase}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Email</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="word-break">{{items?.users?.email | titlecase}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mobileNumber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Number</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items?.users?.mobileNumber}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="location">
+      <mat-header-cell *matHeaderCellDef>location</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="word-break"> {{items.location}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="planId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Plan</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{ getPlanName(items?.users?.planId)}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="plotSize">
+      <mat-header-cell *matHeaderCellDef class="isCompleted" mat-sort-header (click)="sortData()">Plot Size sq/ft</mat-header-cell>
+      <mat-cell *matCellDef="let items" class="isCompleted">{{items.plotSize}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortData()">Created Date</mat-header-cell>
+      <mat-cell *matCellDef="let items"> {{items.createdAt | date}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let items; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <!-- Show "No data found" message when there's no data -->
+  <div *ngIf="!dataSource.data || dataSource.data.length === 0" class="no-data-message">
+    <img src="assets/images/noData.png" alt="Loading..">
+  </div>
+
+  <div *ngIf="!dataSource.data || dataSource.data.length > 0"  class="excel">
+    <button *ngIf="!dataSource.data || dataSource.data.length > 0" mat-raised-button color="primary"
+      (click)="exportToExcel()">Export to Excel</button>
+  </div>
+
+  <div *ngIf="!dataSource.data || dataSource.data.length > 0">
+    <mat-paginator [pageSize]="itemsPerPage" [pageIndex]="currentPage - 1" [length]="totalItems"
+      [pageSizeOptions]="[10, 25, 50, 100]" (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
+  </div>
+</mat-card>

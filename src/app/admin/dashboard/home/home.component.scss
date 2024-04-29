@@ -1,0 +1,8 @@
+@import '~src/scss/variables';
+
+.dashboard:hover {
+  cursor: pointer;
+  transform: translate3d(0, -10px, 0);
+  opacity: 0.6;
+  transition: 0.3s;
+}

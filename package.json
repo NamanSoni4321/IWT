@@ -1,0 +1,46 @@
+{
+  "name": "angular-material-admin",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "node --max_old_space_size=16384 node_modules/@angular/cli/bin/ng serve --host=0.0.0.0 --port=3007 --proxy-config proxy.conf.json",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~13.1.1",
+    "@angular/cdk": "~13.1.1",
+    "@angular/common": "~13.1.1",
+    "@angular/compiler": "~13.1.1",
+    "@angular/core": "~13.1.1",
+    "@angular/flex-layout": "^13.0.0-beta.36",
+    "@angular/forms": "~13.1.1",
+    "@angular/material": "^13.1.1",
+    "@angular/platform-browser": "~13.1.1",
+    "@angular/platform-browser-dynamic": "~13.1.1",
+    "@angular/router": "~13.1.1",
+    "chart.js": "^3.7.0",
+    "firebase": "^10.5.0",
+    "mat-select-filter": "^2.4.1",
+    "moment": "^2.29.4",
+    "ng2-charts": "^3.0.6",
+    "ngx-toastr": "^13.1.0",
+    "ngx-ui-loader": "^13.0.0",
+    "rxjs": "~6.6.3",
+    "tslib": "^2.0.0",
+    "xlsx": "^0.18.5",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~13.1.2",
+    "@angular/cli": "~13.1.2",
+    "@angular/compiler-cli": "~13.1.1",
+    "@angular/language-service": "~13.1.1",
+    "@types/node": "^12.11.1",
+    "typescript": "~4.5.4"
+  }
+}
